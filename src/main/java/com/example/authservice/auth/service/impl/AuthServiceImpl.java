@@ -29,11 +29,12 @@ public class AuthServiceImpl implements AuthService {
 
 
     @Override
-    public AuthResponse register(RegisterRequest request) {
+    public UserResponse register(RegisterRequest request) {
 
 
         var role = roleRepository.findByName("ROLE_USER")
                 .orElseThrow();
+
         var user = User.builder()
                 .fullname(request.getFullname())
                 .username(request.getUsername())
@@ -41,11 +42,13 @@ public class AuthServiceImpl implements AuthService {
                 .roles(Set.of(role))
                 .build();
 
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
 
-        String token = jwtService.generateToken(user);
-
-        return AuthResponse.builder().token(token).build();
+        return UserResponse.builder()
+                .fullname(savedUser.getFullname())
+                .username(savedUser.getUsername())
+                .role("USER")
+                .build();
     }
 
     @Override
