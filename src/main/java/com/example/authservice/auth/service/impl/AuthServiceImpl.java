@@ -47,7 +47,13 @@ public class AuthServiceImpl implements AuthService {
         return UserResponse.builder()
                 .fullname(savedUser.getFullname())
                 .username(savedUser.getUsername())
-                .role("USER")
+                .role(
+                        savedUser.getRoles()
+                                .stream()
+                                .findFirst()
+                                .map(r -> r.getName().replace("ROLE_",""))
+                                .orElse("UNKNOW")
+                )
                 .build();
     }
 
