@@ -1,5 +1,6 @@
-package com.example.authservice.common;
+package com.example.authservice.common.exception;
 
+import com.example.authservice.common.ApiResponse;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
